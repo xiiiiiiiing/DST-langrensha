@@ -1,15 +1,23 @@
 require "prefabutil"
 
+--[[
+功能：
+发身份牌
+mod科技
+]]
+
 local assets =
 {
 	Asset("ANIM", "anim/jitan.zip"),
     Asset("MINIMAP_IMAGE", "jitan"),
 }
 
+--[[
 local prefabs =
 {
 	
 }
+]]
 
 --[[
 local sounds =
@@ -21,27 +29,49 @@ local sounds =
 }
 ]]
 
-local function DropTackleSketches(inst)
-    for i,k in ipairs(inst.components.craftingstation:GetItems()) do
-        inst.components.lootdropper:SpawnLootPrefab(k)
-    end
-end
-
 local function onbuilt(inst)
 	inst.AnimState:PlayAnimation("place")
 	inst.AnimState:PushAnimation("idle")
-	inst.SoundEmitter:PlaySound(sounds.onbuilt)
+	--inst.SoundEmitter:PlaySound(sounds.onbuilt)
+end
+
+local function giveitem(inst, itemname)
+    inst.components.pickable:SetUp(itemname, 1000000)
+    inst.components.pickable:Pause()
+    if not inst.components.pickable.caninteractwith then
+        inst.components.pickable.caninteractwith = true
+        inst.SoundEmitter:PlaySound("dontstarve/common/together/moonbase/moonstaff_place")
+    end
+
+    inst.AnimState:ClearOverrideSymbol("cutstone01")
+    inst.AnimState:ClearOverrideSymbol("swap_body")
+    inst.AnimState:OverrideSymbol(CalcSculptingSymbol(itemname), CalcSymbolFile(itemname), CalcItemSymbol(itemname))
+
+    inst.components.prototyper.trees.SCULPTING = CalcSculptingTech(itemname)
+
+    if string.find(inst.components.pickable.product, "rook")
+        or string.find(inst.components.pickable.product, "bishop")
+        or string.find(inst.components.pickable.product, "knight") then
+
+        inst:AddTag("chess_moonevent")
+    end
+end
+
+local function ongivenitem(inst, giver, item)
+    if item:HasTag("sketch") then
+        AddSketch(inst, item)
+    else
+        giveitem(inst, item.prefab)
+    end
 end
 
 local function onhammered(inst, worker)
-	inst.components.lootdropper:DropLoot()
-    DropTackleSketches(inst)
-    local fx = SpawnPrefab("collapse_small")
     fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
-    fx:SetMaterial("metal")
+    fx:SetMaterial("metal") --掉落材料？
     inst:Remove()
 end
 
+--不知道干啥的
 local function onhit(inst)
     if not inst:HasTag("burnt") then
         inst.AnimState:PlayAnimation("hit")
@@ -63,12 +93,14 @@ local function OnHaunt(inst, haunter)
     return true
 end
 
+--[[
 local function onburnt(inst)
 	DropTackleSketches(inst)
     inst.components.craftingstation:ForgetAllItems()
 
     DefaultBurntStructureFn(inst)
 end
+]]
 
 local function onsave(inst, data)
     if inst.components.burnable ~= nil and inst.components.burnable:IsBurning() or inst:HasTag("burnt") then
@@ -88,13 +120,13 @@ local function fn()
     inst.entity:AddTransform()
     inst.entity:AddAnimState()
 	inst.entity:AddMiniMapEntity()
-    inst.entity:AddSoundEmitter()
+    --inst.entity:AddSoundEmitter()
     inst.entity:AddNetwork()
 
 	MakeObstaclePhysics(inst, .4)
 
 	inst.MiniMapEntity:SetPriority(5)
-	inst.MiniMapEntity:SetIcon("tacklestation.png")
+	inst.MiniMapEntity:SetIcon("jitan.png")
 
     inst.AnimState:SetBank("tackle_station")
     inst.AnimState:SetBuild("tackle_station")
