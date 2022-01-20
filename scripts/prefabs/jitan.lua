@@ -2,7 +2,7 @@ require "prefabutil"
 
 --[[
 功能：
-发身份牌
+发身份牌。 研究怎么利用科学仪器建造东西。身份应为prefab
 mod科技
 ]]
 
@@ -138,6 +138,8 @@ local function fn()
 	inst:AddTag("structure")
 	inst:AddTag("tacklestation")
 
+    inst:AddTag("jitan")
+
     inst.entity:SetPristine()
 
     if not TheWorld.ismastersim then
@@ -149,7 +151,7 @@ local function fn()
 
     inst:AddComponent("inspectable")
 
-	inst:AddComponent("lootdropper")
+	inst:AddComponent("lootdropper") --会掉落物品
     inst:AddComponent("workable")
     inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
     inst.components.workable:SetWorkLeft(4)
@@ -166,13 +168,13 @@ local function fn()
 
     MakeLargeBurnable(inst, nil, nil, true)
     inst.components.burnable:SetOnBurntFn(onburnt)
-    MakeLargePropagator(inst)
+    MakeLargePropagator(inst) -------？？？？
 
     inst:AddComponent("hauntable")
     inst.components.hauntable.cooldown = TUNING.HAUNT_COOLDOWN_SMALL
     inst.components.hauntable:SetOnHauntFn(OnHaunt)
 
-	inst:ListenForEvent("onlearnednewtacklesketch", onlearnednewtacklesketch)
+	inst:ListenForEvent("onlearnednewtacklesketch", onlearnednewtacklesketch) -----没有函数？
 	inst:ListenForEvent("onbuilt", onbuilt)
 
     inst.OnSave = onsave
@@ -181,5 +183,5 @@ local function fn()
     return inst
 end
 
-return Prefab("jitan", fn, assets, prefabs),
+return Prefab("jitan", fn, assets, prefabs),  --prefabs 可忽略 相关的prefab依赖
 	MakePlacer("jitan_placer", "jitan", "jitan", "idle")
