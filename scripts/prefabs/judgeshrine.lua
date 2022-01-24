@@ -13,12 +13,11 @@ local assets =
     Asset("MINIMAP_IMAGE", "judgeshrine"),
 }
 
---[[
 local prefabs =
 {
 	"collapse_small",
+    --"langyashouchuan",
 }
-]]
 
 --[[
 local sounds =
@@ -30,13 +29,15 @@ local sounds =
 }
 ]]
 
+--有onBurnt？
+
 local function onbuilt(inst)
 	inst.AnimState:PlayAnimation("place")
 	inst.AnimState:PushAnimation("idle")
-	--inst.SoundEmitter:PlaySound(sounds.onbuilt)
+	inst.SoundEmitter:PlaySound(sounds.onbuilt)
 end
 
-local function MakePrototyper(inst)
+local function MakePrototyper(inst) ----？？
     if inst.components.trader ~= nil then
         inst:RemoveComponent("trader")
     end
@@ -102,9 +103,9 @@ local function MakeEmpty(inst)
     end
 end
 
-local function OnIgnite(inst)
+local function OnIgnite(inst) --点燃
     if inst.offering ~= nil then
-        inst.components.lootdropper:SpawnLootPrefab("charcoal")
+        inst.components.lootdropper:SpawnLootPrefab("charcoal") --掉落木炭
     end
     MakeEmpty(inst)
     inst.components.trader:Disable()
@@ -160,8 +161,14 @@ end
 ]]
 
 local function onhammered(inst, worker)
+    --可以燃烧吗？？
+    if inst.components.burnable ~= nil and inst.components.burnable:IsBurning() then
+        inst.components.burnable:Extinguish()
+    end
+    local fx = SpawnPrefab("collapse_small")
     fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
     fx:SetMaterial("metal") --掉落材料？
+
     inst:Remove()
 end
 
@@ -169,7 +176,7 @@ end
 local function onhit(inst)
     if not inst:HasTag("burnt") then
         inst.AnimState:PlayAnimation("hit")
-        if inst.components.prototyper.on then
+        if inst.components.prototyper.on then --不知道prototyper
             inst.AnimState:PushAnimation("proximity_loop", true)
         else
             inst.AnimState:PushAnimation("idle", false)
@@ -186,13 +193,14 @@ local function OnHaunt(inst, haunter)
     inst.components.hauntable.hauntvalue = TUNING.HAUNT_TINY
     return true
 end
-
-local function onburnt(inst)
-	DropTackleSketches(inst)
+--[[
+local function onburnt(inst)---
     inst.components.craftingstation:ForgetAllItems()
 
     DefaultBurntStructureFn(inst)
+    --需要补trader？
 end
+]]
 
 local function onsave(inst, data)
     if inst.components.burnable ~= nil and inst.components.burnable:IsBurning() or inst:HasTag("burnt") then
@@ -212,7 +220,7 @@ local function fn()
     inst.entity:AddTransform()
     inst.entity:AddAnimState()
 	inst.entity:AddMiniMapEntity()
-    --inst.entity:AddSoundEmitter()
+    inst.entity:AddSoundEmitter()
     inst.entity:AddNetwork()
 
 	MakeObstaclePhysics(inst, .4)
@@ -230,35 +238,41 @@ local function fn()
 	inst:AddTag("structure")
     inst:AddTag("judgeshrine")
 
+    --MakeSnowCoveredPristine(inst)
+
     inst.entity:SetPristine()
 
     if not TheWorld.ismastersim then
         return inst
     end
 
-    inst._activetask = nil
-    inst._soundtasks = {}
+    --inst._activetask = nil
+    --inst._soundtasks = {}
 
     inst:AddComponent("inspectable")
 
 	inst:AddComponent("lootdropper") --会掉落物品
+
+    MakePrototyper(inst)
+
     inst:AddComponent("workable")
     inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
     inst.components.workable:SetWorkLeft(4)
     inst.components.workable:SetOnFinishCallback(onhammered)
 	inst.components.workable:SetOnWorkCallback(onhit)
+    --MakeSnowCovered(inst)
 
-	inst:AddComponent("craftingstation")
+	--inst:AddComponent("craftingstation")
 
-    inst:AddComponent("prototyper")
+    --[[inst:AddComponent("prototyper")
     inst.components.prototyper.onturnon = onturnon
     inst.components.prototyper.onturnoff = onturnoff
     inst.components.prototyper.onactivate = onactivate
-    inst.components.prototyper.trees = TUNING.PROTOTYPER_TREES.FISHING
-
+    inst.components.prototyper.trees = TUNING.PROTOTYPER_TREES.FISHING -- CARRATSHRINE
+]]
     MakeMediumBurnable(inst, nil, nil, true)
-    inst.components.burnable:SetOnBurntFn(onburnt)
     MakeMediumPropagator(inst)
+    --inst.components.burnable:SetOnBurntFn(onburnt)
 
     inst:AddComponent("hauntable")
     inst.components.hauntable.cooldown = TUNING.HAUNT_COOLDOWN_SMALL
