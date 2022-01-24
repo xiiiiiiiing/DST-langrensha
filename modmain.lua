@@ -129,4 +129,39 @@ AddStategraphState("wilson_client", state_kill)
 AddStategraphActionHandler("wilson", GLOBAL.ActionHandler(GLOBAL.ACTIONS.KILL, "kill"))
 AddStategraphActionHandler("wilson_client", GLOBAL.ActionHandler(GLOBAL.ACTIONS.KILL, "kill"))
 
---狼人刀人部分完
+--狼人刀人部分完--------------
+--------------------------------------------------------------------
+
+--添加祭坛制作功能-----------
+
+local function import(t)
+	for _,v in ipairs(t)do modimport("main/"..v) end
+end
+
+import{
+	'tech',
+}
+
+--添加制作配方-----------
+--[[ 这是什么呢？
+local MKRECIPE = AddRecipeTab( STRINGS.MKRECIPE, 611, "images/hud/myth_tab.xml", "myth_tab.tex") --！！！！！？？？？？
+RECIPETABS.MKCERECIPE = { str = STRINGS.MKCERECIPE,	sort = 100, icon_atlas = "images/hud/myth_tab_change.xml" ,icon = "myth_tab_change.tex",	crafting_station = true }
+
+GLOBAL.MKRECIPE = CUSTOM_RECIPETABS[STRINGS.MKRECIPE]
+]]
+
+AddRecipe("langyashouchuan", {Ingredient("",4), Ingredient("",2)}, RECIPETABS.MKCERECIPE,  TUNING.PROTOTYPER_TREES.JUDGESHRINE, nil, nil, true, nil, nil,".xml", ".tex")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
