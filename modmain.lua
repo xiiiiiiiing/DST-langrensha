@@ -133,10 +133,11 @@ AddStategraphActionHandler("wilson_client", GLOBAL.ActionHandler(GLOBAL.ACTIONS.
 --------------------------------------------------------------------
 
 --添加祭坛制作功能-----------
-
+--[[
 local function import(t)
 	for _,v in ipairs(t)do modimport("main/"..v) end
 end
+]]
 
 import{
 	'tech',
@@ -150,7 +151,7 @@ RECIPETABS.MKCERECIPE = { str = STRINGS.MKCERECIPE,	sort = 100, icon_atlas = "im
 GLOBAL.MKRECIPE = CUSTOM_RECIPETABS[STRINGS.MKRECIPE]
 ]]
 
-AddRecipe("langyashouchuan", {Ingredient("",4), Ingredient("",2)}, RECIPETABS.MKCERECIPE,  TUNING.PROTOTYPER_TREES.JUDGESHRINE, nil, nil, true, nil, nil,".xml", ".tex")
+--AddRecipe("langyashouchuan", {Ingredient("",4), Ingredient("",2)}, RECIPETABS.MKCERECIPE,  TUNING.PROTOTYPER_TREES.JUDGESHRINE, nil, nil, true, nil, nil,".xml", ".tex")
 
 
 
