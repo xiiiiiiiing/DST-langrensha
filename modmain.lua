@@ -1,6 +1,45 @@
 
 -- 待用/可能又用 ----------------
 --GAME_STATE = false
+--[[
+local require = GLOBAL.require
+local STRINGS = GLOBAL.STRINGS
+local Ingredient = GLOBAL.Ingredient
+local RECIPETABS = GLOBAL.RECIPETABS
+local Recipe = GLOBAL.Recipe
+local TECH = GLOBAL.TECH
+local TUNING = GLOBAL.TUNING
+local Player = GLOBAL.ThePlayer
+local TheNet = GLOBAL.TheNet
+local IsServer = GLOBAL.TheNet:GetIsServer()
+local TheInput = GLOBAL.TheInput
+local TimeEvent = GLOBAL.TimeEvent
+local FRAMES = GLOBAL.FRAMES
+local EQUIPSLOTS = GLOBAL.EQUIPSLOTS
+local EventHandler = GLOBAL.EventHandler
+local SpawnPrefab = GLOBAL.SpawnPrefab
+local State = GLOBAL.State
+local DEGREES = GLOBAL.DEGREES
+local Vector3 = GLOBAL.Vector3
+local ACTIONS = GLOBAL.ACTIONS
+local FOODTYPE = GLOBAL.FOODTYPE
+local PLAYERSTUNLOCK = GLOBAL.PLAYERSTUNLOCK
+local GetTime = GLOBAL.GetTime
+local HUMAN_MEAT_ENABLED = GLOBAL.HUMAN_MEAT_ENABLED
+local TheSim = GLOBAL.TheSim
+local ActionHandler = GLOBAL.ActionHandler
+]]
+
+PrefabFiles =
+{
+	"tianpin",
+}
+
+Assets =
+{
+	Asset( "ANIM", "anim/tianpin.zip" ),
+    Asset( "ATLAS", "images/inventoryimages/tianpin.xml" ),
+}
 
 
 -- 狼人刺杀部分(暂时不知道这趴该放哪就先放main里面吧)--------------
@@ -137,11 +176,11 @@ AddStategraphActionHandler("wilson_client", GLOBAL.ActionHandler(GLOBAL.ACTIONS.
 local function import(t)
 	for _,v in ipairs(t)do modimport("main/"..v) end
 end
-]]
 
 import{
 	'tech',
 }
+]]
 
 --添加制作配方-----------
 --[[ 这是什么呢？

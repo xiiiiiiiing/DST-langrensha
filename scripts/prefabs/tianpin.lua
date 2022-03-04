@@ -23,7 +23,7 @@ STRINGS.NAMES.TIANPIN = "天平（暂定）"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.TIANPIN = "检查文本"
 
 local function fn()
-	local inst = CreatEntity()
+	local inst = CreateEntity()
 	inst.entity:AddTransform()
 	inst.entity:AddAnimState()
 	inst.entity:AddMiniMapEntity()
@@ -39,25 +39,25 @@ local function fn()
     inst.AnimState:SetBank("tianpin")--动画
     inst.AnimState:SetBuild("tianpin")
     inst.AnimState:PlayAnimation("idle")
+
+    if not TheWorld.ismastersim then
+        return inst
+    end
 	
-	inst.AddComoponent("inventoryitem")--放入物品栏
-	inst.components.invnetoryitem.imagename = "tianpin"
-	inst.components.inventoryitem.atlasname = "images/inventoryimages/tianpin.xml"
-	isnt.AddComponent("inspectable")--可以检查
+	inst.AddComponent("inventoryitem")--放入物品栏
+	inst.components.inventoryitem.imagename = "tianpin"
+	inst.components.inventoryitem.atlasname = "tianpin.xml"
+	inst.AddComponent("inspectable")--可以检查
 
     --prototyper (from prototyper component) added to pristine state for optimization
     --inst:AddTag("prototyper")
 
 	--inst:AddTag("structure")
-    --inst:AddTag("judgeshrine")
+    --inst:AddTag("tianpin")
 
     --MakeSnowCoveredPristine(inst)
 
     --inst.entity:SetPristine()
-
-    if not TheWorld.ismastersim then
-        return inst
-    end
 
     --inst._activetask = nil
     --inst._soundtasks = {}
@@ -100,5 +100,4 @@ local function fn()
     return inst
 end
 
-return Prefab("tianpin", fn, assets, prefabs),  --prefabs 可忽略 相关的prefab依赖
-	--MakePlacer("judgeshrine_placer", "judgeshrine", "judgeshrine", "idle")
+return Prefab("tianpin", fn, assets, prefabs)  --prefabs 可忽略 相关的prefab依赖
