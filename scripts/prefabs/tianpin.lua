@@ -22,6 +22,30 @@ local prefabs =
 STRINGS.NAMES.TIANPIN = "天平（暂定）"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.TIANPIN = "检查文本"
 
+--[[
+local function MakePrototyper(inst) ----？？
+    if inst.components.trader ~= nil then
+        inst:RemoveComponent("trader")
+    end
+
+    if inst.components.prototyper == nil then
+        inst:AddComponent("prototyper")
+        inst.components.prototyper.trees = TUNING.PROTOTYPER_TREES.JUDGESHRINE
+    end
+end
+
+local function onsave(inst, data)
+    if inst.components.burnable ~= nil and inst.components.burnable:IsBurning() or inst:HasTag("burnt") then
+        data.burnt = true
+    end
+end
+
+local function onload(inst, data)
+    if data ~= nil and data.burnt and inst.components.burnable ~= nil then
+        inst.components.burnable.onburnt(inst)
+    end
+end
+]]
 local function fn()
 	local inst = CreateEntity()
 	inst.entity:AddTransform()
@@ -29,9 +53,9 @@ local function fn()
 	inst.entity:AddMiniMapEntity()
     inst.entity:AddSoundEmitter()
     inst.entity:AddNetwork()
-	inst.entity:SetPristine()
 
 	--MakeObstaclePhysics(inst, .4)
+    MakeInventoryPhysics(inst)
 
 	--inst.MiniMapEntity:SetPriority(5)
 	--inst.MiniMapEntity:SetIcon()
@@ -40,14 +64,16 @@ local function fn()
     inst.AnimState:SetBuild("tianpin")
     inst.AnimState:PlayAnimation("idle")
 
+    inst.entity:SetPristine()
+
     if not TheWorld.ismastersim then
         return inst
     end
 	
-	inst.AddComponent("inventoryitem")--放入物品栏
+	inst:AddComponent("inventoryitem")--放入物品栏
 	inst.components.inventoryitem.imagename = "tianpin"
-	inst.components.inventoryitem.atlasname = "tianpin.xml"
-	inst.AddComponent("inspectable")--可以检查
+	inst.components.inventoryitem.atlasname = "images/inventoryimages/tianpin.xml"
+	inst:AddComponent("inspectable")--可以检查
 
     --prototyper (from prototyper component) added to pristine state for optimization
     --inst:AddTag("prototyper")
@@ -57,12 +83,8 @@ local function fn()
 
     --MakeSnowCoveredPristine(inst)
 
-    --inst.entity:SetPristine()
-
     --inst._activetask = nil
     --inst._soundtasks = {}
-
-    --inst:AddComponent("inspectable")
 
 	--inst:AddComponent("lootdropper") --会掉落物品
 
