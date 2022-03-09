@@ -39,16 +39,6 @@ PrefabFiles =
 env.RECIPETABS = GLOBAL.RECIPETABS 
 env.TECH = GLOBAL.TECH
 
-AddRecipe("tianpin", {Ingredient("cutgrass", 1), Ingredient("twigs", 1)}, RECIPETABS.SURVIVAL, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/tianpin.xml") 
-
---[[
-Assets =
-{
-	Asset( "ANIM", "anim/tianpin.zip" ),
-    Asset( "ATLAS", "images/inventoryimages/tianpin.xml" ),
-}
-]]
-
 -- 狼人刺杀部分(暂时不知道这趴该放哪就先放main里面吧)--------------
 AddPlayerPostInit(function(inst)
 	if GLOBAL.TheWorld.ismastersim then
