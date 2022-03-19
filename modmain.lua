@@ -36,10 +36,13 @@ PrefabFiles =
 	"toothbracelet",
 }
 
+--配方及科技------------
 env.RECIPETABS = GLOBAL.RECIPETABS 
 env.TECH = GLOBAL.TECH
 
-AddRecipe("toothbracelet", {Ingredient("cutgrass", 1), Ingredient("twigs", 5)}, RECIPETABS.SURVIVAL, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/toothbracelet.xml") 
+AddRecipe("toothbracelet", {Ingredient("rope", 1), Ingredient("houndstooth", 5)}, RECIPETABS.SURVIVAL, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/toothbracelet.xml") 
+--------------------------
+
 
 -- 狼人刺杀部分(暂时不知道这趴该放哪就先放main里面吧)--------------
 AddPlayerPostInit(function(inst)

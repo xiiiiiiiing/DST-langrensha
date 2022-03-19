@@ -1,9 +1,14 @@
+--[[
+天平相关功能
+]]
+
 local assets = 
 {
 	Asset("ATLAS", "images/inventoryimages/toothbracelet.xml"),
 	Asset("ANIM", "anim/toothbracelet.zip"),
 }
 
+--不知道有啥用
 local prefabs = 
 {
 	--"collapse_small",
@@ -12,7 +17,7 @@ local prefabs =
 --env.STRINGS = GLOBAL.STRINGS
 STRINGS.NAMES.TOOTHBRACELET = "狼牙手串"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.TOOTHBRACELET = "噢，是尖尖的牙呀！"
-STRINGS.RECIPE_DESC.TOOTHBRACELET = "把狗牙串一串"
+STRINGS.RECIPE_DESC.TOOTHBRACELET = "把狗牙串成一串"
 
 local function fn()
 	local inst = CreateEntity()
@@ -37,10 +42,12 @@ local function fn()
 	inst:AddComponent("inventoryitem")--放入物品栏
 	inst.components.inventoryitem.imagename = "toothbracelet"
 	inst.components.inventoryitem.atlasname = "images/inventoryimages/toothbracelet.xml"
+	inst:AddComponent("stackable")--可堆叠
+	inst.components.stackable.maxsize = TUNING.STACK_SIZE_MEDITEM
 	inst:AddComponent("inspectable")--可以检查
 	MakeHauntableLaunch(inst)--作祟
 
     return inst
 end
 
-return Prefab("toothbracelet", fn, assets, prefabs)  --prefabs 可忽略 相关的prefab依赖
+return Prefab("toothbracelet", fn, assets, prefabs)
