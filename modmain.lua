@@ -30,6 +30,8 @@ local HUMAN_MEAT_ENABLED = GLOBAL.HUMAN_MEAT_ENABLED
 local TheSim = GLOBAL.TheSim
 local ActionHandler = GLOBAL.ActionHandler
 ]]
+
+
 ---------------------------------插入科技树
 modimport "main/tech.lua" ---天平科技
 
@@ -41,27 +43,6 @@ PrefabFiles =
 env.RECIPETABS = GLOBAL.RECIPETABS 
 env.TECH = GLOBAL.TECH
 
-<<<<<<< HEAD
-AddRecipe("tianpin", {Ingredient("cutgrass", 1), Ingredient("twigs", 1)}, RECIPETABS.SURVIVAL, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/tianpin.xml") 
-
---[[
-local function import(t)
-	for _,v in ipairs(t)do modimport("main/"..v) end
-end
-
-import{
-	'tech',
-}
-
-Assets =
-{
-	Asset("IMAGE", "anim/tianpin.zip" ),
-    Asset( "ATLAS", "images/inventoryimages/tianpin.xml" ),
-}
-
-]]
-=======
->>>>>>> 25f34b3e7e152b3c985933f78fdbd7b915466b18
 -- 狼人刺杀部分(暂时不知道这趴该放哪就先放main里面吧)--------------
 AddPlayerPostInit(function(inst)
 	if GLOBAL.TheWorld.ismastersim then

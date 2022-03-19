@@ -82,9 +82,6 @@ local function fn()
     inst:AddComponent("prototyper")
     inst.components.prototyper.trees = TUNING.PROTOTYPER_TREES.TIANPIN_ONE
 
-    MakeObstaclePhysics(inst, 0.4)
-    
-
     --prototyper (from prototyper component) added to pristine state for optimization
     --inst:AddTag("prototyper")
 
