@@ -63,6 +63,10 @@ local function fn()
     inst.AnimState:SetBank("tianpin")--动画
     inst.AnimState:SetBuild("tianpin")
     inst.AnimState:PlayAnimation("idle")
+    inst:AddTag("tianpin")
+    inst:AddTag("prototyper")
+
+    --MakeInventoryFloatable(inst, "med", nil, 0.77) --漂浮
 
     inst.entity:SetPristine()
 
@@ -74,6 +78,12 @@ local function fn()
 	inst.components.inventoryitem.imagename = "tianpin"
 	inst.components.inventoryitem.atlasname = "images/inventoryimages/tianpin.xml"
 	inst:AddComponent("inspectable")--可以检查
+
+    inst:AddComponent("prototyper")
+    inst.components.prototyper.trees = TUNING.PROTOTYPER_TREES.TIANPIN_ONE
+
+    MakeObstaclePhysics(inst, 0.4)
+    
 
     --prototyper (from prototyper component) added to pristine state for optimization
     --inst:AddTag("prototyper")
@@ -123,3 +133,4 @@ local function fn()
 end
 
 return Prefab("tianpin", fn, assets, prefabs)  --prefabs 可忽略 相关的prefab依赖
+      --MakePlacer("tianpin_placer", "tianpin", "tianpin", "idle")

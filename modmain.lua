@@ -1,4 +1,4 @@
-
+GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
 -- 待用/可能又用 ----------------
 
 --GAME_STATE = false
@@ -30,6 +30,8 @@ local HUMAN_MEAT_ENABLED = GLOBAL.HUMAN_MEAT_ENABLED
 local TheSim = GLOBAL.TheSim
 local ActionHandler = GLOBAL.ActionHandler
 ]]
+---------------------------------插入科技树
+modimport "main/tech.lua" ---天平科技
 
 PrefabFiles =
 {
@@ -42,13 +44,21 @@ env.TECH = GLOBAL.TECH
 AddRecipe("tianpin", {Ingredient("cutgrass", 1), Ingredient("twigs", 1)}, RECIPETABS.SURVIVAL, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/tianpin.xml") 
 
 --[[
+local function import(t)
+	for _,v in ipairs(t)do modimport("main/"..v) end
+end
+
+import{
+	'tech',
+}
+
 Assets =
 {
-	Asset( "ANIM", "anim/tianpin.zip" ),
+	Asset("IMAGE", "anim/tianpin.zip" ),
     Asset( "ATLAS", "images/inventoryimages/tianpin.xml" ),
 }
-]]
 
+]]
 -- 狼人刺杀部分(暂时不知道这趴该放哪就先放main里面吧)--------------
 AddPlayerPostInit(function(inst)
 	if GLOBAL.TheWorld.ismastersim then
