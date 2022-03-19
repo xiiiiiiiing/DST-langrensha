@@ -1,4 +1,4 @@
-
+GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
 -- 待用/可能又用 ----------------
 
 --GAME_STATE = false
@@ -30,19 +30,24 @@ local HUMAN_MEAT_ENABLED = GLOBAL.HUMAN_MEAT_ENABLED
 local TheSim = GLOBAL.TheSim
 local ActionHandler = GLOBAL.ActionHandler
 ]]
+-----------------------------------------
 
 PrefabFiles =
 {
+	"tianpin",
 	"toothbracelet",
 }
 
---配方及科技------------
+---------------配方及科技------------
+
+--插入科技树
+modimport "main/tech.lua" ---天平科技
+
 env.RECIPETABS = GLOBAL.RECIPETABS 
 env.TECH = GLOBAL.TECH
 
 AddRecipe("toothbracelet", {Ingredient("rope", 1), Ingredient("houndstooth", 5)}, RECIPETABS.SURVIVAL, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/toothbracelet.xml") 
 --------------------------
-
 
 -- 狼人刺杀部分(暂时不知道这趴该放哪就先放main里面吧)--------------
 AddPlayerPostInit(function(inst)
@@ -172,38 +177,3 @@ AddStategraphActionHandler("wilson_client", GLOBAL.ActionHandler(GLOBAL.ACTIONS.
 
 --狼人刀人部分完--------------
 --------------------------------------------------------------------
-
---添加祭坛制作功能-----------
---[[
-local function import(t)
-	for _,v in ipairs(t)do modimport("main/"..v) end
-end
-
-import{
-	'tech',
-}
-]]
-
---添加制作配方-----------
---[[ 这是什么呢？
-local MKRECIPE = AddRecipeTab( STRINGS.MKRECIPE, 611, "images/hud/myth_tab.xml", "myth_tab.tex") --！！！！！？？？？？
-RECIPETABS.MKCERECIPE = { str = STRINGS.MKCERECIPE,	sort = 100, icon_atlas = "images/hud/myth_tab_change.xml" ,icon = "myth_tab_change.tex",	crafting_station = true }
-
-GLOBAL.MKRECIPE = CUSTOM_RECIPETABS[STRINGS.MKRECIPE]
-]]
-
---AddRecipe("langyashouchuan", {Ingredient("",4), Ingredient("",2)}, RECIPETABS.MKCERECIPE,  TUNING.PROTOTYPER_TREES.JUDGESHRINE, nil, nil, true, nil, nil,".xml", ".tex")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
