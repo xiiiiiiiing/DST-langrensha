@@ -9,8 +9,8 @@ mod科技：制作狼牙手串
 
 local assets = 
 {
-	Asset("ATLAS", "images/inventoryimages/tianpin.xml"),
-	Asset("ANIM", "anim/tianpin.zip"),
+	Asset("ATLAS", "images/inventoryimages/balance.xml"),
+	Asset("ANIM", "anim/balance.zip"),
 }
 
 local prefabs = 
@@ -19,8 +19,8 @@ local prefabs =
     --"langyashouchuan",
 }
 
-STRINGS.NAMES.TIANPIN = "天平（暂定）"
-STRINGS.CHARACTERS.GENERIC.DESCRIBE.TIANPIN = "检查文本"
+STRINGS.NAMES.BALANCE = "天平（暂定）"
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.BALANCE = "检查文本"
 
 --[[
 local function MakePrototyper(inst) ----？？
@@ -60,10 +60,10 @@ local function fn()
 	--inst.MiniMapEntity:SetPriority(5)
 	--inst.MiniMapEntity:SetIcon()
 
-    inst.AnimState:SetBank("tianpin")--动画
-    inst.AnimState:SetBuild("tianpin")
+    inst.AnimState:SetBank("balance")--动画
+    inst.AnimState:SetBuild("balance")
     inst.AnimState:PlayAnimation("idle")
-    inst:AddTag("tianpin")
+    inst:AddTag("balance")
     inst:AddTag("prototyper")
 
     --MakeInventoryFloatable(inst, "med", nil, 0.77) --漂浮
@@ -75,18 +75,18 @@ local function fn()
     end
 	
 	inst:AddComponent("inventoryitem")--放入物品栏
-	inst.components.inventoryitem.imagename = "tianpin"
-	inst.components.inventoryitem.atlasname = "images/inventoryimages/tianpin.xml"
+	inst.components.inventoryitem.imagename = "balance"
+	inst.components.inventoryitem.atlasname = "images/inventoryimages/balance.xml"
 	inst:AddComponent("inspectable")--可以检查
 
     inst:AddComponent("prototyper")
-    inst.components.prototyper.trees = TUNING.PROTOTYPER_TREES.TIANPIN_ONE
+    inst.components.prototyper.trees = TUNING.PROTOTYPER_TREES.BALANCE_ONE
 
     --prototyper (from prototyper component) added to pristine state for optimization
     --inst:AddTag("prototyper")
 
 	--inst:AddTag("structure")
-    --inst:AddTag("tianpin")
+    --inst:AddTag("balance")
 
     --MakeSnowCoveredPristine(inst)
 
@@ -129,5 +129,5 @@ local function fn()
     return inst
 end
 
-return Prefab("tianpin", fn, assets, prefabs)  --prefabs 可忽略 相关的prefab依赖
-      --MakePlacer("tianpin_placer", "tianpin", "tianpin", "idle")
+return Prefab("balance", fn, assets, prefabs)  --prefabs 可忽略 相关的prefab依赖
+      --MakePlacer("balance_placer", "balance", "balance", "idle")

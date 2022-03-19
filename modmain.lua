@@ -34,7 +34,7 @@ local ActionHandler = GLOBAL.ActionHandler
 
 PrefabFiles =
 {
-	"tianpin",
+	"balance",
 	"toothbracelet",
 }
 
