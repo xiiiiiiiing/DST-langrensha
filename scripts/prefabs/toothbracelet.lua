@@ -5,6 +5,7 @@
 local assets = 
 {
 	Asset("ATLAS", "images/inventoryimages/toothbracelet.xml"),
+	Asset("IMAGE", "images/inventoryimages/toothbracelet.tex"),
 	Asset("ANIM", "anim/toothbracelet.zip"),
 }
 
@@ -19,11 +20,12 @@ STRINGS.NAMES.TOOTHBRACELET = "狼牙手串"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.TOOTHBRACELET = "噢，是尖尖的牙呀！"
 STRINGS.RECIPE_DESC.TOOTHBRACELET = "把狗牙串成一串"
 
-local function fn()
+local function fn(Sim)
 	local inst = CreateEntity()
+	
 	inst.entity:AddTransform()
 	inst.entity:AddAnimState()
-    --inst.entity:AddSoundEmitter()
+    inst.entity:AddSoundEmitter()
     inst.entity:AddNetwork()
 
 	--MakeObstaclePhysics(inst, .4)

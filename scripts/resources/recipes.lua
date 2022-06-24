@@ -1,26 +1,25 @@
---[[ 
-新加图标
-PROTOTYPER_DEFS = {
-{moonrockseed				= {icon_atlas = CRAFTING_ICONS_ATLAS, icon_image = "station_celestial.tex",			is_crafting_station = true,									filter_text = STRINGS.UI.CRAFTING_STATION_FILTERS.CELESTIAL};
-}
-]]
-local Recipes = {
-	--狼牙手串
+--使用mod材料
+local function MedalIngredient(ingredienttype,amount)
+	local atlas=resolvefilepath_soft("images/"..ingredienttype..".xml")
+	return Ingredient(ingredienttype,amount,atlas)
+end
+
+local function Recipes = {
 	{
-		name = "toothbracelet"
-		Ingredient={
-			ingredient("rope", 1),
-			ingredient("houndstooth", 5),
-		}
-		tab = ,
-		level = ,
-		nonlock = true;
-
+		name = "toothbracelet",
+		ingredients = {
+			{
+				Ingredient("rope", 1), I
+				Ingredient("houndstooth", 5),
+			},
+		},
+		level = TECH.SCIENCE_TWO,
+		filters = {"REFINE"},
+		atlas = "images/inventoryimages/toothbracelet.xml"	
 	},
+}
 
-}	
-
-return{ Recipes = Recipes }
-
-
-
+return {
+	Recipes = Recipes,
+	DeconstructRecipes = DeconstructRecipes,
+}

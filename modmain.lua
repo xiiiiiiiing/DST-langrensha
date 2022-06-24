@@ -1,4 +1,5 @@
 GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+local _G = GLOBAL
 -- 待用/可能又用 ----------------
 
 --GAME_STATE = false
@@ -32,22 +33,44 @@ local ActionHandler = GLOBAL.ActionHandler
 ]]
 -----------------------------------------
 
-PrefabFiles =
-{
+PrefabFiles = {
 	"balance",
 	"toothbracelet",
+}
+
+Assets = {
+	Asset("ATLAS", "images/inventoryimages/toothbracelet.xml"),
+	Asset("IMAGE", "images/inventoryimages/toothbracelet.tex"),
+	Asset("ATLAS", "images/inventoryimages/balance.xml"),
+	Asset("IMAGE", "images/inventoryimages/balance.tex"),
 }
 
 ---------------配方及科技------------
 
 --插入科技树
-modimport "main/tech.lua"             ---天平科技
-modimport "main/recipes.lua"          ---添加菜单
+--modimport("main/tech.lua") ---天平科技
+
+AddRecipe2(
+	"toothbracelet", {
+		Ingredient("rope", 1), 
+		Ingredient("houndstooth", 5),
+	}, TECH.SCIENCE_ONE, {
+		atlas = "images/inventoryimages/toothbracelet.xml", image = "toothbracelet.tex"}, 
+		{"REFINE"}
+) 
+
+AddRecipe2(
+    "balance", {
+        Ingredient("boards", 2),
+        Ingredient("rope", 2),
+    }, TECH.SCIENCE_ONE, {
+        atlas = "images/inventoryimages/balance.xml", image = "balance.tex"
+    }, { "WEAPONS", "ARMOUR" }
+)
 
 env.RECIPETABS = GLOBAL.RECIPETABS 
 env.TECH = GLOBAL.TECH
 
---AddRecipe("toothbracelet", {Ingredient("rope", 1), Ingredient("houndstooth", 5)}, RECIPETABS.SURVIVAL, TECH.NONE, nil, nil, nil, nil, nil,"images/inventoryimages/toothbracelet.xml") 
 --------------------------
 
 -- 狼人刺杀部分(暂时不知道这趴该放哪就先放main里面吧)--------------
@@ -178,3 +201,5 @@ AddStategraphActionHandler("wilson_client", GLOBAL.ActionHandler(GLOBAL.ACTIONS.
 
 --狼人刀人部分完--------------
 --------------------------------------------------------------------
+--测试一下刀人
+--泰拉
